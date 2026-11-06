@@ -5,9 +5,9 @@ cd "$(dirname "$0")/.."
 npm test
 npm run build
 touch dist/.nojekyll
-export GIT_INDEX_FILE=.git/deploy-index
+export GIT_INDEX_FILE="$(pwd)/.git/deploy-index"
 rm -f "$GIT_INDEX_FILE"
-GIT_WORK_TREE=dist git add -A
+GIT_DIR="$(pwd)/.git" GIT_WORK_TREE="$(pwd)/dist" git add -A
 tree=$(git write-tree)
 commit=$(git commit-tree "$tree" -m "Publicera $(git rev-parse --short HEAD)")
 rm -f "$GIT_INDEX_FILE"
